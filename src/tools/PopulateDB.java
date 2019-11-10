@@ -45,7 +45,7 @@ public class PopulateDB {
                 "rating REAL," +
                 "reviews INT," +
                 "FOREIGN KEY(carNumber) REFERENCES cars(licenseNumber)," + 
-                "FOREIGN KEY(location) REFERENCES locations(name)," +             
+                "FOREIGN KEY(location) REFERENCES locations(name)" +             
                 ");";
         Statement stmt = null;
         try {
@@ -81,7 +81,7 @@ public class PopulateDB {
         String createLocationTable = "CREATE TABLE locations (" +
                 "name TEXT PRIMARY KEY," +
                 "x INT," +
-                "y INT," +
+                "y INT" +
                 ");";
         Statement stmt = null;
         try {
@@ -101,12 +101,14 @@ public class PopulateDB {
                 "driver TEXT," +
                 "source TEXT," +
                 "destination TEXT," +
-                "car TEXT," +
                 "startTime TEXT," +
                 "duration INT," +
                 "distance INT," +
                 "cost INT," +
                 "FOREIGN KEY(userEmail) REFERENCES users(email)," +
+                "FOREIGN KEY(driver) REFERENCES drivers(id)," +
+                "FOREIGN KEY(source) REFERENCES locations(name)," +
+                "FOREIGN KEY(destination) REFERENCES users(name)," +
                 ");";
         Statement stmt = null;
         try {
