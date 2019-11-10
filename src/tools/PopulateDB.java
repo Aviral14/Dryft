@@ -15,6 +15,7 @@ public class PopulateDB {
     }
 
     private static void makeUserTable(Connection conn) {
+        String deleteExistingTable = "DROP TABLE IF EXISTS users;";
         String createUserTable = "CREATE TABLE users (" +
                 "email TEXT PRIMARY KEY," +
                 "fullname TEXT," +
@@ -26,6 +27,7 @@ public class PopulateDB {
         Statement stmt = null;
         try {
             stmt = conn.createStatement();
+            stmt.execute(deleteExistingTable);
             stmt.execute(createUserTable);
         } catch (SQLException e) {
             e.printStackTrace();
@@ -33,6 +35,7 @@ public class PopulateDB {
     }
 
     private static void makeDriverTable(Connection conn) {
+        String deleteExistingTable = "DROP TABLE IF EXISTS drivers;";
         String createDriverTable = "CREATE TABLE drivers (" +
                 "id INT PRIMARY KEY," +
                 "name TEXT," +
@@ -40,12 +43,14 @@ public class PopulateDB {
                 "sex CHAR(1)," +
                 "location TEXT," +
                 "rating REAL," +
-                "reviews TEXT," +
-                "FOREIGN KEY(carNumber) REFERENCES cars(licenseNumber)," +                
+                "reviews INT," +
+                "FOREIGN KEY(carNumber) REFERENCES cars(licenseNumber)," + 
+                "FOREIGN KEY(location) REFERENCES locations(name)," +             
                 ");";
         Statement stmt = null;
         try {
             stmt = conn.createStatement();
+            stmt.execute(deleteExistingTable);
             stmt.execute(createDriverTable);
         } catch (SQLException e) {
             e.printStackTrace();
@@ -53,16 +58,18 @@ public class PopulateDB {
     }
 
     private static void makeCarTable(Connection conn) {
+        String deleteExistingTable = "DROP TABLE IF EXISTS cars;";
         String createCarTable = "CREATE TABLE cars (" +
                 "licenseNumber TEXT PRIMARY KEY," +
                 "model TEXT," +
-                "costPerKm TEXT," +
+                "costPerKm INT," +
                 "CarType TEXT," +
                 "speed INT" +
                 ");";
         Statement stmt = null;
         try {
             stmt = conn.createStatement();
+            stmt.execute(deleteExistingTable);
             stmt.execute(createCarTable);
         } catch (SQLException e) {
             e.printStackTrace();
@@ -70,6 +77,7 @@ public class PopulateDB {
     }
 
     private static void makeLocationTable(Connection conn) {
+        String deleteExistingTable = "DROP TABLE IF EXISTS locations;";
         String createLocationTable = "CREATE TABLE locations (" +
                 "name TEXT PRIMARY KEY," +
                 "x INT," +
@@ -78,6 +86,7 @@ public class PopulateDB {
         Statement stmt = null;
         try {
             stmt = conn.createStatement();
+            stmt.execute(deleteExistingTable);
             stmt.execute(createLocationTable);
         } catch (SQLException e) {
             e.printStackTrace();
@@ -85,6 +94,7 @@ public class PopulateDB {
     }
 
     private static void makeRideTable(Connection conn) {
+        String deleteExistingTable = "DROP TABLE IF EXISTS rides;";
         String createRideTable = "CREATE TABLE rides (" +
                 "id INT PRIMARY KEY," +
                 "userEmail TEXT ," +
@@ -101,6 +111,7 @@ public class PopulateDB {
         Statement stmt = null;
         try {
             stmt = conn.createStatement();
+            stmt.execute(deleteExistingTable);
             stmt.execute(createRideTable);
         } catch (SQLException e) {
             e.printStackTrace();
