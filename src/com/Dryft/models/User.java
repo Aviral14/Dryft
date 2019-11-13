@@ -1,6 +1,6 @@
 package com.Dryft.models;
 
-class User {
+public class User {
     private final String fullname;
     private final String email;
     private final char sex;
@@ -12,10 +12,6 @@ class User {
         this.email = email;
         this.password = password;
         this.sex = sex;
-        this.balance = balance;
-    }
-
-    public void setBalance(int balance) {
         this.balance = balance;
     }
 
@@ -39,4 +35,7 @@ class User {
         return balance;
     }
 
+    public void setBalance(int balance) {
+        this.balance = balance;
+    }
 }

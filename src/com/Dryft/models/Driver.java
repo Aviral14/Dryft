@@ -1,20 +1,36 @@
 package com.Dryft.models;
 
 public class Driver {
+    private final int id;
     private final String name;
     private final Car car;
     private final char sex;
     private Location location;
     private double rating;
     private int reviews;
+    private boolean onRoad;
 
-    public Driver(String name, Car car, Location location, char sex, double rating, int reviews) {
+    public Driver(int id, String name, Car car, Location location, char sex, double rating, int reviews, boolean onRoad) {
+        this.id = id;
         this.name = name;
         this.car = car;
         this.location = location;
         this.sex = sex;
         this.rating = rating;
         this.reviews = reviews;
+        this.onRoad = onRoad;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public boolean isOnRoad() {
+        return onRoad;
+    }
+
+    public void setOnRoad(boolean onRoad) {
+        this.onRoad = onRoad;
     }
 
     public Location getLocation() { return location; }

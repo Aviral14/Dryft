@@ -1,9 +1,8 @@
 package com.Dryft.models;
 
-import java.lang.Math;
 import java.time.LocalDateTime;
 
-class Ride {
+public class Ride {
     private final Location source;
     private final Location destination;
     private final Driver driver;
@@ -13,7 +12,7 @@ class Ride {
     private final int duration;
     private final int cost;
 
-    Ride(Location source, Location destination, Driver driver, User user) {
+    public Ride(Location source, Location destination, Driver driver, User user) {
         int distance = calculateDistance(source, destination);
         int duration = calculateDuration(distance, driver);
         int cost = calculateCost(distance, driver);
@@ -32,13 +31,9 @@ class Ride {
         return Math.abs(destination.getX() - source.getX()) + Math.abs(destination.getY() - source.getY());
     }
 
-    public static int calculateDuration(int distance, Driver driver) {
-        return distance / driver.getCar().getSpeed();
-    }
+    public static int calculateDuration(int distance, Driver driver) { return distance / driver.getCar().getSpeed(); }
 
-    public static int calculateCost(int distance, Driver driver) {
-        return distance * driver.getCar().getCostPerKm();
-    }
+    public static int calculateCost(int distance, Driver driver) { return distance * driver.getCar().getCostPerKm(); }
 
     public Location getSource() {
         return source;
@@ -56,7 +51,7 @@ class Ride {
         return user;
     }
 
-    public int getStartTime() {
+    public LocalDateTime getStartTime() {
         return startTime;
     }
 

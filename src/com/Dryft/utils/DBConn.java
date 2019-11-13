@@ -6,6 +6,7 @@ import java.sql.SQLException;
 
 public class DBConn {
     private static Connection conn = null;
+    private static int numConns = 0;
 
     private static void ensureDriverExists() {
         try {
@@ -26,17 +27,19 @@ public class DBConn {
             System.err.println("Error in connecting to DB");
             System.exit(1);
         }
+        numConns++;
         return conn;
     }
 
     public static void closeConn() {
         try {
-            if (conn != null && !conn.isClosed()) {
+            if (conn != null && !conn.isClosed() && numConns == 1) {
                 conn.close();
             }
         } catch (SQLException e) {
             System.err.println("Error while closing DB");
             System.exit(1);
         }
+        numConns--;
     }
 }
