@@ -73,10 +73,6 @@ class DistributionThread extends Thread {
             e.printStackTrace();
         }
     }
-
-    public static void sendDriverBack() {
-
-    }
 }
 
 /**
