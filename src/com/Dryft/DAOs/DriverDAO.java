@@ -19,10 +19,17 @@ public class DriverDAO {
         ResultSet result = st.executeQuery();
         DBConn.closeConn();
         if (result.next()) {
-            return new Driver(result.getInt("id"), result.getString("name"),
-                    CarDAO.getCar(result.getString("CarNumber")), LocationDAO.getLocation(result.getString("location")),
-                    result.getString("sex").charAt(0), result.getDouble("rating"), result.getInt("reviews"),
-                    result.getBoolean("onRoad"));
+            return new Driver(
+                    result.getInt("id"),
+                    result.getString("name"),
+                    CarDAO.getCar(result.getString("CarNumber")),
+                    LocationDAO.getLocation(result.getString("location")),
+                    LocationDAO.getLocation(result.getString("homeLocation")),
+                    result.getString("sex").charAt(0),
+                    result.getDouble("rating"),
+                    result.getInt("reviews"),
+                    result.getBoolean("onRoad")
+            );
         } else {
             throw new IllegalArgumentException("Driver not found");
         }
@@ -47,6 +54,7 @@ public class DriverDAO {
                     result.getString("name"),
                     CarDAO.getCar(result.getString("CarNumber")),
                     LocationDAO.getLocation(result.getString("location")),
+                    LocationDAO.getLocation(result.getString("homeLocation")),
                     result.getString("sex").charAt(0),
                     result.getDouble("rating"),
                     result.getInt("reviews"),
