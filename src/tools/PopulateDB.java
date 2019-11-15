@@ -8,10 +8,10 @@ import java.sql.Statement;
 public class PopulateDB {
 
     private static void makeTables(Connection conn) {
-//        makeUserTable(conn);
-//        makeDriverTable(conn);
-//        makeCarTable(conn);
-//        makeLocationTable(conn);
+        makeUserTable(conn);
+        makeDriverTable(conn);
+        makeCarTable(conn);
+        makeLocationTable(conn);
         makeRideTable(conn);
     }
 
@@ -37,18 +37,19 @@ public class PopulateDB {
 
     private static void makeDriverTable(Connection conn) {
         String deleteExistingTable = "DROP TABLE IF EXISTS drivers;";
-        String createDriverTable = "CREATE TABLE drivers ("
-                + "id INT PRIMARY KEY,"
-                + "name TEXT,"
-                + "carNumber TEXT,"
-                + "sex CHAR(1),"
-                + "location TEXT,"
-                + "rating REAL,"
-                + "reviews INT,"
-                + "onRoad BOOLEAN,"
-                + "FOREIGN KEY(carNumber) REFERENCES cars(licenseNumber),"
-                + "FOREIGN KEY(location) REFERENCES locations(name)"
-                + ");";
+        String createDriverTable = "CREATE TABLE drivers (" +
+                "id INTEGER PRIMARY KEY AUTOINCREMENT," +
+                "name TEXT," +
+                "carNumber TEXT," +
+                "sex CHAR(1)," +
+                "location TEXT," +
+                "homeLocation TEXT," +
+                "rating REAL," +
+                "reviews INT," +
+                "onRoad BOOLEAN," +
+                "FOREIGN KEY(carNumber) REFERENCES cars(licenseNumber)," +
+                "FOREIGN KEY(location) REFERENCES locations(name)" +
+                ");";
         Statement stmt = null;
         try {
             stmt = conn.createStatement();
@@ -97,22 +98,22 @@ public class PopulateDB {
 
     private static void makeRideTable(Connection conn) {
         String deleteExistingTable = "DROP TABLE IF EXISTS rides;";
-        String createRideTable = "CREATE TABLE rides ("
-                + "id INT PRIMARY KEY,"
-                + "userEmail TEXT ,"
-                + "driver INT,"
-                + "source TEXT,"
-                + "destination TEXT,"
-                + "startTime DATETIME,"
-                + "duration INT,"
-                + "distance INT,"
-                + "driverTime INT,"
-                + "cost INT,"
-                + "FOREIGN KEY(userEmail) REFERENCES users(email),"
-                + "FOREIGN KEY(driver) REFERENCES drivers(id),"
-                + "FOREIGN KEY(source) REFERENCES locations(name),"
-                + "FOREIGN KEY(destination) REFERENCES locations(name)"
-                + ");";
+        String createRideTable = "CREATE TABLE rides (" +
+                "id INTEGER PRIMARY KEY AUTOINCREMENT," +
+                "userEmail TEXT ," +
+                "driver INT," +
+                "source TEXT," +
+                "destination TEXT," +
+                "startTime DATETIME," +
+                "duration INT," +
+                "distance INT," +
+                "driverTime INT," +
+                "cost INT," +
+                "FOREIGN KEY(userEmail) REFERENCES users(email)," +
+                "FOREIGN KEY(driver) REFERENCES drivers(id)," +
+                "FOREIGN KEY(source) REFERENCES locations(name)," +
+                "FOREIGN KEY(destination) REFERENCES locations(name)" +
+                ");";
         Statement stmt = null;
         try {
             stmt = conn.createStatement();

@@ -6,16 +6,19 @@ public class Driver {
     private final String name;
     private final Car car;
     private final char sex;
+    private final Location homeLocation;
     private Location location;
     private double rating;
     private int reviews;
     private boolean onRoad;
 
-    public Driver(int id, String name, Car car, Location location, char sex, double rating, int reviews, boolean onRoad) {
+    public Driver(int id, String name, Car car, Location location, Location homeLocation, char sex, double rating,
+            int reviews, boolean onRoad) {
         this.id = id;
         this.name = name;
         this.car = car;
         this.location = location;
+        this.homeLocation = homeLocation;
         this.sex = sex;
         this.rating = rating;
         this.reviews = reviews;
@@ -36,6 +39,10 @@ public class Driver {
 
     public Location getLocation() {
         return location;
+    }
+
+    public Location getHomeLocation() {
+        return homeLocation;
     }
 
     public void setLocation(Location location) {
