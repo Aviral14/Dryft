@@ -5,7 +5,13 @@
  */
 package com.Dryft.gui;
 
+import com.Dryft.models.Driver;
+import com.Dryft.models.User;
+import com.Dryft.models.Ride;
+import java.sql.SQLException;
 import java.util.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
 /**
@@ -13,16 +19,49 @@ import javax.swing.JOptionPane;
  * @author T Sudheer Kumar
  */
 public class timerPage extends javax.swing.JFrame {
-
-    void quit() {
-        this.dispose();
-    }
-
+    
+    User user;
+    Driver driver;
+    String username;
+    String driverName;
+    Ride ride;
+    int secondsPassed = 0;
+    int driverTime = 10;
+    int tripTime = 10;
     /**
      * Creates new form timerPage
      */
+    Timer timer = new Timer();
+    
     public timerPage() {
+//        setDefaultCloseOperation(javax.swing.JFrame.DO_NOTHING_ON_CLOSE);
+        user = null;
         initComponents();
+        
+    }
+    
+    public timerPage(Ride ride) {
+//        setDefaultCloseOperation(javax.swing.JFrame.DO_NOTHING_ON_CLOSE);
+        this.user = ride.getUser();
+        this.ride = ride;
+        this.driver = ride.getDriver();
+        username = this.user.getFullname();
+        driverName = ride.getDriver().getName();
+        tripTime = ride.getDuration();
+        driverTime = ride.getDriverTime();
+        initComponents();
+        start();
+    }
+    
+    public void quit() {
+        try {
+            JOptionPane.showMessageDialog(null, username + ", your trip with " + driverName + " just got over. Please rate us.");
+            this.dispose();
+            new Rating(user, driver).setVisible(true);
+            user.endRide(ride);
+        } catch (SQLException ex) {
+            Logger.getLogger(timerPage.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     /**
@@ -35,77 +74,112 @@ public class timerPage extends javax.swing.JFrame {
     private void initComponents() {
 
         jLabel1 = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
         jTextField1 = new javax.swing.JTextField();
+        jButton2 = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosed(java.awt.event.WindowEvent evt) {
+                formWindowClosed(evt);
+            }
+            public void windowClosing(java.awt.event.WindowEvent evt) {
+                formWindowClosing(evt);
+            }
+        });
 
         jLabel1.setFont(new java.awt.Font("Rockwell Extra Bold", 1, 24)); // NOI18N
         jLabel1.setText("ENJOY YOUR RIDE!");
-
-        jButton1.setBackground(new java.awt.Color(255, 0, 0));
-        jButton1.setFont(new java.awt.Font("SansSerif", 0, 14)); // NOI18N
-        jButton1.setText("EMERGENCY ");
 
         jLabel2.setFont(new java.awt.Font("SansSerif", 0, 14)); // NOI18N
         jLabel2.setText("Time left to reach Destination (seconds)");
 
         jTextField1.setEditable(false);
 
+        jButton2.setFont(new java.awt.Font("SansSerif", 0, 14)); // NOI18N
+        jButton2.setText("<  SIGN OUT");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(27, 27, 27)
-                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(56, 56, 56)
-                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 179, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(84, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 297, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(163, 163, 163))
+            .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 297, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(170, 170, 170))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 185, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(224, 224, 224))))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(27, 27, 27)
+                        .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 179, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(248, 248, 248)
+                        .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(122, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(43, 43, 43)
+                .addGap(39, 39, 39)
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(84, 84, 84)
+                .addGap(88, 88, 88)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(50, 50, 50)
-                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(77, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 67, Short.MAX_VALUE)
+                .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(59, 59, 59))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-    int secondsPassed = 0;
-    Timer timer = new Timer();
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        time.cancel();
+        JOptionPane.showMessageDialog(null, "Please rate your driver before you go!");
+        new Rating(user, driver).setVisible(true);
+        quit();
+    }//GEN-LAST:event_jButton2ActionPerformed
+    
+    private void formWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_formWindowClosed
+    
+    private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
+        if (secondsPassed >= tripTime) {
+            quit();
+        }
+        JOptionPane.showMessageDialog(null, "You cannot close this window before your ride is over");
+    }//GEN-LAST:event_formWindowClosing
+    
+    Timer time = new Timer();
     TimerTask task = new TimerTask() {
+        @Override
         public void run() {
             secondsPassed++;
-            jTextField1.setText(Integer.toString(10 - secondsPassed));
-            if (secondsPassed == 10) {
-                //JOptionPane.showOptionDialog(rootPane, this, null, WIDTH, WIDTH, null, options, rootPane);
-                jTextField1.setVisible(false);
-                timer.cancel();
-                quit();
+            if (secondsPassed >= driverTime) {
+                jLabel2.setText("You will reach your destination in ");
+                jTextField1.setText(Integer.toString(driverTime + tripTime - secondsPassed));
+                if (secondsPassed >= tripTime + driverTime) {
+                    time.cancel();
+                    quit();
+                }
+            } else {
+                jTextField1.setText(Integer.toString(driverTime - secondsPassed));
+                jLabel2.setText("Your driver will reach you in ");
             }
         }
     };
-
+    
     public void start() {
-        timer.scheduleAtFixedRate(task, 1000, 1000);
+        time.scheduleAtFixedRate(task, 1000, 1000);
     }
 
     /**
@@ -113,8 +187,6 @@ public class timerPage extends javax.swing.JFrame {
      */
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
-        timerPage t = new timerPage();
-        t.start();
 
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
@@ -122,7 +194,7 @@ public class timerPage extends javax.swing.JFrame {
          */
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
+                if ("Metal".equals(info.getName())) {
                     javax.swing.UIManager.setLookAndFeel(info.getClassName());
                     break;
                 }
@@ -141,13 +213,15 @@ public class timerPage extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new timerPage().setVisible(true);
+                timerPage t = new timerPage();
+                t.setVisible(true);
+                //t.start();
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private static javax.swing.JTextField jTextField1;

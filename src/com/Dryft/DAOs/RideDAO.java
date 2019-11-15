@@ -13,8 +13,8 @@ public class RideDAO {
     public static void startRide(Ride ride) throws SQLException {
         Connection conn = DBConn.getConn();
         PreparedStatement st = conn.prepareStatement("INSERT INTO rides "
-                + "(id, userEmail, driver, source, destination, startTime, duration, distance, cost, driverTime)"
-                + "VALUES (1, ?, ?, ?, ?, ?, ?, ?, ?, ?);");
+                + "(userEmail, driver, source, destination, startTime, duration, distance, cost, driverTime)"
+                + "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?);");
         st.setString(1, ride.getUser().getEmail());
         st.setInt(2, ride.getDriver().getId());
         st.setString(3, ride.getSource().getName());

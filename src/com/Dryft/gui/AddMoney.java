@@ -17,7 +17,7 @@ public class AddMoney extends javax.swing.JFrame {
 
     private final User user;
     private int balance = 200;
-    // Variables declaration - do not modify//GEN-BEGIN:variables
+    // Variables declaration - do not modify                     
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
@@ -25,6 +25,7 @@ public class AddMoney extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JTextField jTextField1;
     private javax.swing.JTextField jTextField2;
+
     /**
      * Creates new form addMoney
      */
@@ -50,7 +51,7 @@ public class AddMoney extends javax.swing.JFrame {
          */
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
+                if ("Metal".equals(info.getName())) {
                     javax.swing.UIManager.setLookAndFeel(info.getClassName());
                     break;
                 }
@@ -196,5 +197,5 @@ public class AddMoney extends javax.swing.JFrame {
             jTextField2.setText("");
         }
     }//GEN-LAST:event_jButton1ActionPerformed
-    // End of variables declaration//GEN-END:variables
+    // End of variables declaration                   
 }

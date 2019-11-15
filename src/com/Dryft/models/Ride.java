@@ -49,7 +49,7 @@ public class Ride {
     }
 
     public static int calculateDuration(int distance, Driver driver) {
-        return distance / driver.getCar().getSpeed();
+        return (distance * 100) / driver.getCar().getSpeed();
     }
 
     public static int calculateDriverTime(Location source, Driver driver) {

@@ -73,5 +73,6 @@ public class User {
     public void endRide(Ride ride) throws SQLException {
         DriverDAO.freeDriver(ride.getDriver().getId());
         balance -= ride.getCost();
+        UserDAO.incrementBalance(this.email, balance);
     }
 }

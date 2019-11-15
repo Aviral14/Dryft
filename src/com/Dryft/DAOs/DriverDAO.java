@@ -27,7 +27,7 @@ public class DriverDAO {
             throw new IllegalArgumentException("Driver not found");
         }
     }
- 
+
     public static Driver getBestDriver(Location origin, Car.CarType type) throws SQLException {
         Connection conn = DBConn.getConn();
         PreparedStatement st = conn.prepareStatement(
@@ -81,11 +81,21 @@ public class DriverDAO {
         Connection conn = DBConn.getConn();
         PreparedStatement st = conn.prepareStatement("Update drivers set onRoad = (?);");
         st.setBoolean(1, false);
-        ResultSet result = st.executeQuery();
-        if (!result.next()) {
-            DBConn.closeConn();
+        int i = st.executeUpdate();
+        DBConn.closeConn();
+        if (i == 0) {
             throw new IllegalArgumentException("Invalid Driver");
         }
+    }
+    
+    public static void updateRating(Driver driver, int rating) throws SQLException {
+        Connection conn = DBConn.getConn();
+        double realRating = driver.updateRating(rating);
+        var st = conn.prepareStatement("UPDATE drivers SET rating = (?), reviews = (?) WHERE id = (?)");
+        st.setDouble(1, realRating);
+        st.setInt(2, driver.getReviews());
+        st.setInt(3, driver.getId());
+        st.executeUpdate();
         DBConn.closeConn();
     }
 }

@@ -57,10 +57,15 @@ public class Driver {
     public double getRating() {
         return rating;
     }
+    
+    public int getReviews() {
+        return reviews;
+    }
 
-    public void updateRating(int review) {
+    public double updateRating(int review) {
         double total_rating = ((this.rating * this.reviews) + review);
         this.reviews++;
         this.rating = total_rating / this.reviews;
+        return rating;
     }
 }

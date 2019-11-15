@@ -97,22 +97,22 @@ public class PopulateDB {
 
     private static void makeRideTable(Connection conn) {
         String deleteExistingTable = "DROP TABLE IF EXISTS rides;";
-        String createRideTable = "CREATE TABLE rides (" +
-                "id INT PRIMARY KEY," +
-                "userEmail TEXT ," +
-                "driver INT," +
-                "source TEXT," +
-                "destination TEXT," +
-                "startTime DATETIME," +
-                "duration INT," +
-                "distance INT," +
-                "driverTime INT," +
-                "cost INT," +
-                "FOREIGN KEY(userEmail) REFERENCES users(email)," +
-                "FOREIGN KEY(driver) REFERENCES drivers(id)," +
-                "FOREIGN KEY(source) REFERENCES locations(name)," +
-                "FOREIGN KEY(destination) REFERENCES locations(name)" +
-                ");";
+        String createRideTable = "CREATE TABLE rides ("
+                + "id INT PRIMARY KEY,"
+                + "userEmail TEXT ,"
+                + "driver INT,"
+                + "source TEXT,"
+                + "destination TEXT,"
+                + "startTime DATETIME,"
+                + "duration INT,"
+                + "distance INT,"
+                + "driverTime INT,"
+                + "cost INT,"
+                + "FOREIGN KEY(userEmail) REFERENCES users(email),"
+                + "FOREIGN KEY(driver) REFERENCES drivers(id),"
+                + "FOREIGN KEY(source) REFERENCES locations(name),"
+                + "FOREIGN KEY(destination) REFERENCES locations(name)"
+                + ");";
         Statement stmt = null;
         try {
             stmt = conn.createStatement();

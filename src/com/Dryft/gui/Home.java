@@ -252,6 +252,10 @@ public class Home extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        if (balance < 300) {
+            JOptionPane.showMessageDialog(null, "You need a minimum balance of Rs 300 in your wallet. Please add some money before continuing.");
+            return;
+        }
         String pickUp = (String) jComboBox1.getSelectedItem();
         String destination = (String) jComboBox2.getSelectedItem();
         String carType = (String) jComboBox3.getSelectedItem();
@@ -269,7 +273,7 @@ public class Home extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "No driver available at the moment.");
             return;
         }
-        JOptionPane.showMessageDialog(null, "Pickup:-" + pickUp + "\nDestination:-" + destination + "\nCar Type:-" + carType);
+        JOptionPane.showMessageDialog(null, "Pickup:-\t" + pickUp + "\nDestination:-\t" + destination + "\nCar Type:-\t" + carType);
         new DriverPage(user, driver, origin, dest).setVisible(true);
         this.dispose();
     }//GEN-LAST:event_jButton1ActionPerformed
@@ -294,7 +298,7 @@ public class Home extends javax.swing.JFrame {
          */
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
+                if ("Metal".equals(info.getName())) {
                     javax.swing.UIManager.setLookAndFeel(info.getClassName());
                     break;
                 }
@@ -320,7 +324,7 @@ public class Home extends javax.swing.JFrame {
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
         this.dispose();
-        new ridesList().setVisible(true);
+        new ridesList(user).setVisible(true);
 // TODO add your handling code here:
     }//GEN-LAST:event_jButton4ActionPerformed
 
