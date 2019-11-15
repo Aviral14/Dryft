@@ -16,7 +16,8 @@ class DistributionThread extends Thread {
             Thread.sleep(300);
             System.out.println("Starting Driver Redistribution");
             Connection conn = DBConn.getConn();
-            PreparedStatement st = conn.prepareStatement("UPDATE drivers set location = homeLocation ;");
+            PreparedStatement st = conn.prepareStatement("UPDATE drivers set location = homeLocation Where onRoad = (?) ;");
+            st.setBoolean(1, false);
             st.executeUpdate();
             DBConn.closeConn();
         } catch (Exception e) {
